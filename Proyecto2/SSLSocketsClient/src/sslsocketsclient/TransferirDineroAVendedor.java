@@ -17,8 +17,8 @@ import javax.net.ssl.SSLSocketFactory;
  *
  * @author karol
  */
-public class CambiarStatusClient {
-        public CambiarStatusClient(Usuario u,String status) {
+public class TransferirDineroAVendedor {
+      public TransferirDineroAVendedor(Usuario u,String status) {
     
       try {
       SSLSocketFactory socketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();

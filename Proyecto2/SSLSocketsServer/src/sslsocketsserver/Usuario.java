@@ -15,17 +15,16 @@ import java.util.ArrayList;
 public class Usuario implements Serializable{
     String _nombre;
     String _pass;
-    String _status;
+    Double _saldo;
     ArrayList<Usuario> _listaClientes;
 
     public Usuario() {        
     }
 
-    public Usuario(String _nombre, String _pass, String _estatus,ArrayList<Usuario> _listaClientes) {
+    public Usuario(String _nombre, String _pass, Double _saldo) {
         this._nombre = _nombre;
         this._pass = _pass;
-        this._status = _estatus;
-        this._listaClientes = _listaClientes;
+        this._saldo = _saldo;
     }
 
     public String getNombre() {
@@ -44,17 +43,7 @@ public class Usuario implements Serializable{
         this._pass = _pass;
     }
 
-    public String getStatus() {
-        return _status;
-    }
-
-    public void setStatus(String _status) {
-        this._status = _status;
-    }
-
-    
-    
-     /**
+    /**
      * Retorna la lista de Clientes
      */
     public ArrayList<Usuario> getListaClientes() {
@@ -76,7 +65,17 @@ public class Usuario implements Serializable{
         {
             System.out.println("Nombre: " + nodoActual.getNombre());
             System.out.println("Pass: "+ nodoActual.getPass());
-            System.out.println("Estatus: "+ nodoActual.getStatus());
+            System.out.println("Saldo: "+ nodoActual.getSaldo());
         }
     }
+
+    public Double getSaldo() {
+        return _saldo;
+    }
+
+    public void setSaldo(Double _saldo) {
+        this._saldo = _saldo;
+    }
+    
+    
 }

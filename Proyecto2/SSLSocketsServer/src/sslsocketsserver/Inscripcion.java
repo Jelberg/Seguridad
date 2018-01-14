@@ -29,7 +29,6 @@ public class Inscripcion {
     
     public static String registro(Usuario c){
         String respuesta;
-        c.setStatus("activo");
         System.out.println("ENTRO A REGSITRO");
         try {
  
@@ -62,14 +61,14 @@ public class Inscripcion {
                             
                             String pass = (String) usuario.get("pass");
                             
-                            String estatus = (String) usuario.get("estatus");
+                            Double saldo = Double.valueOf((String )usuario.get("saldo"));
                             
                             pass = seguridad.decryptPassword(pass);
                             
                             System.out.println("PASS "+pass);
    
                             //Lista de la base de datos usuarios
-                            Usuario aux = new Usuario(nombre,pass,estatus,null);
+                            Usuario aux = new Usuario(nombre,pass,saldo);
                             if (!(usuarios.contains(aux))){
                                   usuarios.add(aux);
                                   
@@ -116,7 +115,7 @@ public class Inscripcion {
                     String encPass = seguridad.encryptPassword(sk.getPass());
                     usuarioJSONObject.put("nombre",sk.getNombre());
                     usuarioJSONObject.put("pass",encPass);
-                    usuarioJSONObject.put("estatus",sk.getStatus());
+                    usuarioJSONObject.put("saldo",String.valueOf(sk.getSaldo()));
 
                 // A la lista de usuario en el array JSON se le adiciona un usuario
                 // en particular

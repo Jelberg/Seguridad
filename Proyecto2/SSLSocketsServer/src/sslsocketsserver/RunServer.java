@@ -43,13 +43,19 @@ public class RunServer {
         SSLSocket socket = (SSLSocket) serverSocket.accept();
         BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         PrintWriter output = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+        System.out.println("ENTRAMOS AL SERVER");
         String userName = input.readLine();
+         System.out.println(userName);
         String password = input.readLine();
+        System.out.println(password);
+        Double saldo = Double.valueOf(input.readLine());
+        System.out.println(saldo.toString());
         String opc = input.readLine();
-        String status = input.readLine();
-        
-        Usuario u = new Usuario(userName, password,null, null);
+         System.out.println(opc);
+        Usuario u = new Usuario(userName, password, saldo);
 
+        
+        
         if (opc.compareTo("1")==0) {
           System.out.println("Inscripción");
           Inscripcion i = new Inscripcion();
@@ -66,9 +72,9 @@ public class RunServer {
 
         }           
         if (opc.compareTo("3")==0) {
-            System.out.println("Estatus");
-            CambiarStatusServer i = new CambiarStatusServer();
-            String respuesta = i.cambiar(u, status);
+            System.out.println("Sumar Saldo");
+            SumarSaldoVendedor i = new SumarSaldoVendedor();
+            String respuesta = i.sumarSaldo(u, saldo);
             System.out.println("Respuesta Servidor: " + respuesta);
             output.println("Respuesta Servidor: " + respuesta);
         }
@@ -83,9 +89,8 @@ public class RunServer {
               String respuesta ="Generó";
               System.out.println("Respuesta Servidor: " + respuesta);
               output.println("Respuesta Servidor: " + respuesta);
-        }
-        
-        
+        }        
+      
         output.close();
         input.close();
         socket.close();

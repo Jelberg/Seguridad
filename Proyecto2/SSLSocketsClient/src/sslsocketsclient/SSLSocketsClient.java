@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import javax.servlet.http.HttpServletRequest;
 
-
 /**
  *
  * @author karol
@@ -18,11 +17,14 @@ import javax.servlet.http.HttpServletRequest;
 public class SSLSocketsClient {
     private static String nombre;
     private static String pass;
+    private static Double saldo;
     private static Usuario u;
     private static Security sc = Security.getInstance();
     private static String text;
     private static CaptchaGenerator cap = new CaptchaGenerator();
     private static String respuesta="";
+    private static String saldoIn;
+    private static String saldoTransf;
 
     /**
      * @param args the command line arguments
@@ -58,6 +60,8 @@ public class SSLSocketsClient {
                     nombre = brRequest.readLine();
                     System.out.println("PASS");
                     pass = brRequest.readLine();
+                    System.out.println("SALDO INICIAL");
+                    saldoIn = brRequest.readLine();
                     
                     while (!sc.validarPassSize(pass) 
                         || (sc.validarMay(pass)[0]==0)                                                   
@@ -73,7 +77,7 @@ public class SSLSocketsClient {
                     pass = brRequest.readLine();                   
                 }
                     
-                    u = new Usuario(nombre, pass, "activo",null);
+                    u = new Usuario(nombre, pass, Double.valueOf(saldoIn));
                     
                     text = cap.generateCaptchaText();
                     cap.renderImage(text);
@@ -105,15 +109,17 @@ public class SSLSocketsClient {
                     
                     System.out.println("RRR "+ respuesta);
                     //if (respuesta.compareTo("ACCEDIÓ")==0)
-                        u = new Usuario(nombre, pass, null,null);  
+                        u = new Usuario(nombre, pass, null);  
                 break;
                         
                 case "3":
                    // if (respuesta.compareTo("ACCEDIÓ")==0){
-                        new CambiarStatusClient(u,"bloqueado");
+                       System.out.println("SALDO A TRANSFRIR");
+                        saldoTransf = brRequest.readLine();
+                        new TransferirDineroAVendedor(u,saldoTransf);
                     //}
                     //else
-                      //  System.out.println("Debe estar iniciada la sesión");                        
+                      //  System.out.println("Debe estar iniciada la sesión");                   
                     
                 break;
                 

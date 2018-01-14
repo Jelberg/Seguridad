@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sslsocketsclient;
+package sslsocketsserver;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,8 +17,8 @@ import javax.net.ssl.SSLSocketFactory;
  *
  * @author karol
  */
-public class InscripcionClient {
-    public InscripcionClient(Usuario u) {
+public class InscripcionVendedor {
+    public InscripcionVendedor(Usuario u) {
     
       try {
       SSLSocketFactory socketFactory = (SSLSocketFactory) SSLSocketFactory.getDefault();

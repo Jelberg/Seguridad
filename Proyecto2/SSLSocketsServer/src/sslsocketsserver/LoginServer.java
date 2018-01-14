@@ -5,10 +5,8 @@
  */
 package sslsocketsserver;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import org.json.simple.JSONArray;
@@ -59,7 +57,7 @@ class LoginServer {
                             
                             String pass = (String) usuario.get("pass");
                             
-                            String estatus = (String) usuario.get("estatus");
+                            Double saldo = (Double) usuario.get("saldo");
                             
                             //String decpass = seguridad.decryptPassword(pass);
                             
@@ -68,17 +66,17 @@ class LoginServer {
                             
                             //Lista de la base de datos usuarios
                             System.out.println("Leyendo lista");
-                            Usuario aux = new Usuario(nombre,pass,estatus,null);
+                            Usuario aux = new Usuario(nombre,pass,saldo);
                             if (!(usuarios.contains(aux))){
                                   usuarios.add(aux);
                                   System.out.println("AUX " + aux.getNombre());
                                   System.out.println("AUX " + aux.getPass());
-                                  System.out.println("AUX " + aux.getStatus());
+                                  System.out.println("AUX " + aux.getSaldo());
                                   
                             }                            
                         } // End for
                         
-                        Usuario aux = new Usuario(null,null,null,usuarios);
+                        Usuario aux = new Usuario(null,null,null);
                         aux.imprimirLista();
  
                     } catch (IOException e) {
@@ -104,13 +102,7 @@ class LoginServer {
                        System.out.println("Encontró el username");
                        if (nodoActual._pass.compareTo(seguridad.encryptPassword(password))==0){
                            System.out.println("Clave Correcta");
-                           if (nodoActual._status.compareTo("activo")==0){
-                               System.out.println("Estatus Activo");
-                               return respuesta="ACCEDIÓ";
-                           }else{
-                               System.out.println("Estatus bloqueado");
-                               return respuesta="USUARIO SE ENCUENTRA BLOQUEDADO. COMUNICAR ADMIN";
-                           }
+                           return respuesta="ACCEDIÓ";
                        }else{
                            System.out.println("Username bueno clave inválida");
                            return respuesta="CONTRASEÑA INVÁLIDA";

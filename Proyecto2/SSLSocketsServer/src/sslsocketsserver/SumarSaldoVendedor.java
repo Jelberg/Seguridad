@@ -15,14 +15,12 @@ import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
-import static sslsocketsserver.Inscripcion.usuarios;
-import static sslsocketsserver.LoginServer.DireccionArchivoUsuarios;
 
 /**
  *
  * @author karol
  */
-public class CambiarStatusServer {
+public class SumarSaldoVendedor {
     static String DireccionArchivoUsuarios = "src//sslsocketsserver//usuarios.jason";
     static ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
     static Security seguridad = Security.get_singlInstance();
@@ -30,7 +28,7 @@ public class CambiarStatusServer {
     File f;
     private boolean cambio;
     
-     public String cambiar(Usuario c, String status){         
+  /**   public String cambiar(Usuario c, String status){         
         System.out.println("ENTRO A CAMBIAR STATUS");
         System.out.println("u: " + c.getNombre());
         System.out.println("st: " + c.getStatus());
@@ -123,6 +121,115 @@ public class CambiarStatusServer {
                if (cambio)
                    guardarArchivo();
                     
+                if (!(usuarios.contains(c))){
+                      usuarios.add(c);
+                      System.out.println("Agrega");
+                      respuesta = "INSCRITO EXITOSO";
+                }else {
+                    respuesta = "ERROR: YA SE ENCUENTRA INSCRITO";
+                } 
+
+            } catch (IOException e) {
+			e.printStackTrace();
+                        return respuesta = "ERROR DE ARCHIVO";
+            }
+        return respuesta="NO ENTRÓ EN NADA";
+     * @param c}*
+     * @param anadir
+     * @return */
+     
+     public String sumarSaldo(Usuario c, Double anadir){         
+        System.out.println("ENTRO A SUMAR");
+        System.out.println("u: " + c.getNombre());
+        System.out.println("saldo: " + c.getSaldo());
+        try {
+ 
+		File file = new File(DireccionArchivoUsuarios);
+                
+		// Si el archivo no existe, lo crea
+		if (!file.exists()) {
+                    file.createNewFile();
+                    f=file;
+		}else{ // Si el archivo existe lo decodifico
+                    BufferedReader br = null;
+                    String jsonADecodificar = "";
+                    try {
+                        String sCurrentLine;
+                        br = new BufferedReader(new FileReader(DireccionArchivoUsuarios));                                 
+ 
+                        while ((sCurrentLine = br.readLine()) != null) {
+                            jsonADecodificar = sCurrentLine;
+                        }
+                        
+                        JSONObject obj = (JSONObject)JSONValue.parse(jsonADecodificar);
+                        JSONArray dropped = (JSONArray)obj.get("Usuarios");
+ 
+                        for (Object object : dropped) {
+            
+                            JSONObject auxiliar = (JSONObject) object;
+            
+                            JSONObject usuario =  (JSONObject) auxiliar.get("Usuario");
+          
+                            String nombre = (String) usuario.get("nombre");
+                            
+                            String pass = (String) usuario.get("pass");
+                            
+                            Double saldo = (Double) usuario.get("saldo");
+                            
+                            //String decpass = seguridad.decryptPassword(pass);
+                            
+                            //System.out.println("PASS "+decpass);   
+                            
+                            //Lista de la base de datos usuarios
+                            System.out.println("Leyendo lista");
+                            Usuario aux = new Usuario(nombre,pass,saldo);
+                            if (!(usuarios.contains(aux))){
+                                  usuarios.add(aux);
+                                  System.out.println("AUX " + aux.getNombre());
+                                  System.out.println("AUX " + aux.getPass());
+                                  System.out.println("AUX " + aux.getSaldo());
+                                  
+                            }                            
+                        } // End for
+                        
+                        Usuario aux = new Usuario(null,null,null);
+                        aux.imprimirLista();
+ 
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        return respuesta = "ERROR DE ARCHIVO";
+                        
+                    } finally {
+                        try {
+                            if (br != null)br.close();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                            return respuesta = "ERROR DE ARCHIVO";
+                            
+                            
+                        }
+                    }
+                } // end if else existencia del archivo
+            
+                // Analizando la lista de Usuarios regitrados
+               for (int i=0; i< usuarios.size(); i++)
+               {
+                   if (usuarios.get(i).getNombre().compareTo(c.getNombre())==0){
+                       System.out.println("Encontró el username");
+                       usuarios.get(i).setSaldo(usuarios.get(i).getSaldo()+anadir);
+                       cambio = true;
+                   }
+                   else{
+                       System.out.println("No Encontró");
+                       respuesta = "Usuario Inválido";
+                       cambio = false;
+                   }                            
+               }
+               
+               f=file;
+               if (cambio)
+                   guardarArchivo();
+                    
             /*    if (!(usuarios.contains(c))){
                       usuarios.add(c);
                       System.out.println("Agrega");
@@ -137,6 +244,7 @@ public class CambiarStatusServer {
             }
         return respuesta="NO ENTRÓ EN NADA"; 
     }
+     
      
      public void guardarArchivo(){
          try{
@@ -154,7 +262,7 @@ public class CambiarStatusServer {
                     String encPass = seguridad.encryptPassword(sk.getPass());
                     usuarioJSONObject.put("nombre",sk.getNombre());
                     usuarioJSONObject.put("pass",encPass);
-                    usuarioJSONObject.put("estatus",sk.getStatus());
+                    usuarioJSONObject.put("saldo",sk.getSaldo());
 
                 // A la lista de usuario en el array JSON se le adiciona un usuario
                 // en particular
