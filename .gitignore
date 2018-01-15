@@ -1,4 +1,3 @@
-*.iml
 .gradle
 local.properties
 /.idea/workspace.xml
@@ -92,3 +91,4 @@ Proyecto2/SSLSocketsServer/manifest\.mf
 Proyecto2/SSLSocketsClient/build/
 
 Proyecto2/SSLSocketsServer/desktop\.ini
+

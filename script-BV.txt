@@ -1,0 +1,13 @@
+-----******** SCRIPTS BANCO VENDEDOR *******--------
+
+create table bankseller(
+	idbs		serial,
+	saldobs		int,
+	clientebs 	varchar(40),
+	depositobs	int,
+constraint pk_bs primary key (idbs)
+
+);
+
+
+insert into bankseller(clientebs,saldobs,depositobs) values ('jessica',300,19);
