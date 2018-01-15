@@ -1,0 +1,53 @@
+<html>
+
+   <head>
+    <script type = "text/javascript">
+        var name;
+        var pass;
+   </script>
+<script>
+	function info() {
+          alert('Bienvenido a la pagina de pago del banco');
+        }
+</script>
+
+<script type="text/javascript">
+        function LinkButton_Click(){  
+            var url = "http://www.fanfic.es/browse.php?type=categories&catid=";
+            var cat = url.concat(pass);
+            window.open(cat);
+        }
+</script>
+    
+  </head>
+  <body onload="info('param','test');">
+    
+        <h1 id="page2-heading3" style="color:#000000;">Banco Pago</h1>
+
+    <div id="page2-markdown3" class="show-list-numbers-and-dots">
+      <p style="color:#000000;">Nickname</p>
+    </div>
+
+    <div>
+       <input type="text" id="nn" name="nombre" onchange="document.getElementById('elemento1').innerHTML= name =this.value">
+    </div>
+
+    <div id="page2-markdown5" class="show-list-numbers-and-dots">
+      <p style="color:#000000;">Clave</p>
+    </div>
+
+    <div>
+       <input type="text" id="cl" name="clave" onchange="document.getElementById('elemento2').innerHTML= pass =this.value">
+    </div>
+
+     <!p id="elemento1"></p>
+     <!p id="elemento2"></p>
+
+   <a href= '#link' >COMPRAR AHORA</a>
+   
+   <button onClick= "LinkButton_Click()">Password</button>
+
+   <button onClick="alert('¡Hola, señor!')">Saludar</button>
+
+  </body>
+</html>
